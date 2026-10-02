@@ -1,13 +1,21 @@
-import openpyxl
+import pandas as pd
 
-# 1. Carrega o arquivo Excel
-wb = openpyxl.load_workbook('c:\Users\Monique\Desktop\Monique\Atividade\estimativa_dou_2025.xls', data_only=True)
+# 1. Criar o nome ou o caminho completo do arquivo .xls
+caminho_arquivo_xls = "estimativa_dou_2025.xls"
 
-# 2. Seleciona a planilha ativa (ou use wb['Nome da Aba'])
-aba = wb.active
+# 2. Lê a planilha
+tabela = pd.read_excel(caminho_arquivo_xls)
 
-# 3. Percorre as linhas e colunas exibindo os valores
-for linha in aba.iter_rows(values_only=True):
-    # Ignora linhas completamente vazias
-    if any(linha):
-        print(linha)
+# 3.Mostra as primeiras linhas no terminal
+print(tabela.head())
+
+# 4. Ler o arquivo Excel original (.xls ou .xlsx)
+caminho_excel = caminho_arquivo_xls
+tabela = pd.read_excel(caminho_excel)
+
+# 5. Salvar como arquivo .csv
+# 5.1 'index=False' impede que o Python crie uma coluna extra com números de linhas
+# 5.2 'encoding="utf-8-sig"' garante que acentos e caracteres especiais não fiquem bugados
+tabela.to_csv("convertido_arquivo.csv", index=False, encoding="utf-8-sig")
+
+print("Arquivo convertido com sucesso para CSV!")
